@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Venice Journey</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..500&display=swap">
+<style>
+/* Layout: a vertical film. Full-bleed photos pin while she scrolls and the next one slides over; quiet white pages hold the questions. */
+:root{
+  --paper:#ffffff; --paper-2:#f6f9f8; --ink:#1d1d1f; --mute:#6e6e73; --hair:#e5e5ea;
+  --lagoon:#2c6e68; --on-photo:#ffffff;
+  --display:"Bodoni Moda","Bodoni 72",Didot,Georgia,serif;
+  --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --gl:max(24px,env(safe-area-inset-left,0px)); --gr:max(24px,env(safe-area-inset-right,0px));
+  --ease:cubic-bezier(.22,.8,.24,1);
+  --b-pink:#e8909c; --b-yellow:#f1cf63; --b-blue:#6fa8d6; --b-green:#7fb89a; --b-white:#ffffff;
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
+
+/* opening */
+.intro{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;padding-block:4rem;padding-left:var(--gl);padding-right:var(--gr)}
+.intro .inner{display:grid;gap:1.1rem;justify-items:center}
+.eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.intro h1{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(4.6rem,22vw,10.5rem);line-height:.9;letter-spacing:-.02em}
+.intro .sub{font-size:clamp(1.05rem,2.8vw,1.25rem);line-height:1.55;color:var(--mute);max-width:26ch;text-wrap:balance}
+.begin{margin-top:.8rem;border:0;border-radius:999px;padding:1rem 2.4rem;background:var(--ink);color:var(--paper);font-weight:500;font-size:1.02rem;transition:transform .4s var(--ease),opacity .4s}
+.begin:active{transform:scale(.97)}
+.swipe{position:absolute;left:0;right:0;bottom:calc(1.6rem + env(safe-area-inset-bottom,0px));font-size:.8rem;color:var(--mute);display:grid;justify-items:center;gap:.35rem}
+.swipe svg{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.intro .inner>*{animation:rise 1.4s var(--ease) both}
+.intro .inner>:nth-child(2){animation-delay:.15s}.intro .inner>:nth-child(3){animation-delay:.35s}.intro .inner>:nth-child(4){animation-delay:.55s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* photo scenes */
+.photo{position:relative;height:300vh;height:300svh}
+.photo.deep{height:420vh;height:420svh}
+.photo + section{margin-top:-100vh;margin-top:-100svh}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--ink)}
+.frame{position:absolute;inset:-3%;background:linear-gradient(165deg,var(--a),var(--b));transform-origin:var(--focus,50% 50%);will-change:transform}
+.frame img{display:block;width:100%;height:100%;object-fit:cover}
+.frame img{opacity:0;transition:opacity 1.4s var(--ease)}
+.frame img.ready{opacity:1}
+.caption .by{font-size:.68rem;opacity:.6;max-width:36ch}
+.caption .by a{color:inherit}
+.scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,16,20,.66) 0%,rgba(12,16,20,.22) 40%,rgba(12,16,20,0) 62%)}
+.veil{position:absolute;inset:0;background:var(--paper);opacity:0}
+.caption{position:absolute;left:0;bottom:0;max-width:44rem;padding-left:var(--gl);padding-right:var(--gr);padding-bottom:calc(clamp(2.2rem,8vh,5rem) + env(safe-area-inset-bottom,0px));color:var(--on-photo);display:grid;gap:.6rem}
+.caption .kicker{font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;opacity:.86}
+.caption h2{font-family:var(--display);font-weight:500;font-size:clamp(2.7rem,9.5vw,5.4rem);line-height:.98;letter-spacing:-.01em;text-wrap:balance}
+.caption .line{font-size:clamp(1.04rem,2.7vw,1.3rem);line-height:1.5;max-width:30ch;opacity:.95;text-wrap:pretty}
+
+/* white pages */
+.rest{position:relative;min-height:100vh;min-height:100svh;background:var(--paper);display:grid;place-items:center;padding-block:clamp(4rem,12vh,8rem);padding-left:var(--gl);padding-right:var(--gr)}
+.rest .inner{width:100%;max-width:34rem;display:grid;gap:1.4rem;justify-items:center;text-align:center}
+.rest h3{font-family:var(--display);font-weight:500;font-size:clamp(2.1rem,7.5vw,3.5rem);line-height:1.04;letter-spacing:-.01em;text-wrap:balance}
+.rest p{font-size:1.08rem;line-height:1.6;color:var(--mute);max-width:32ch;text-wrap:balance}
+.options{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.opt{border:1px solid var(--hair);background:var(--paper);border-radius:18px;padding:1.15rem 1rem;font-size:1.02rem;line-height:1.35;transition:background .35s var(--ease),color .35s var(--ease),border-color .35s,transform .35s var(--ease)}
+.opt:active{transform:scale(.98)}
+.opt[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.sw{width:58px;height:58px;border-radius:50%;border:1px solid var(--hair);background:var(--c);transition:box-shadow .35s var(--ease),transform .35s var(--ease)}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink);transform:scale(1.06)}
+.reply{min-height:3.4em;font-size:1.06rem;line-height:1.55;color:var(--ink);max-width:30ch;opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reply.on{opacity:1;transform:none}
+.note h3{font-style:italic;font-weight:400;font-size:clamp(3rem,12vw,5.6rem)}
+
+/* passport */
+.passport-card{width:min(100%,23rem);background:var(--paper-2);border:1px solid var(--hair);border-radius:24px;padding:2.2rem 1.6rem 1.8rem;display:grid;gap:1.2rem;justify-items:center;box-shadow:0 40px 80px -40px rgba(29,29,31,.28)}
+.passport-card .eyebrow{color:var(--lagoon)}
+.stamp{width:min(82%,250px);height:auto;color:var(--lagoon);opacity:0;transform:scale(1.9) rotate(-16deg)}
+.stamped .stamp{animation:stamp .6s cubic-bezier(.2,1.35,.4,1) forwards}
+@keyframes stamp{to{opacity:.9;transform:scale(1) rotate(-6deg)}}
+.st-big{font-family:var(--display);font-size:34px;font-weight:600;letter-spacing:.12em;fill:currentColor}
+.st-small{font-family:var(--text);font-size:10.5px;letter-spacing:.2em;fill:currentColor}
+.count{font-family:var(--display);font-size:1.5rem}
+.again{border:0;background:none;color:var(--lagoon);font-size:.95rem;padding:.6rem 1rem}
+.credit{font-size:.75rem;color:var(--mute)}
+
+/* chrome */
+.progress{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:2px;z-index:21;opacity:0;transition:opacity .6s}
+.progress.on{opacity:1}
+.progress i{display:block;height:100%;background:var(--lagoon);transform-origin:left;transform:scaleX(0)}
+.mute{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 14px);right:max(16px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--ink);display:grid;place-items:center;box-shadow:0 6px 20px rgba(29,29,31,.12)}
+.mute .waves{transition:opacity .3s}.mute.off .waves{opacity:0}.mute .cross{opacity:0}.mute.off .cross{opacity:1}
+
+@media (max-width:440px){.options{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:1ms!important;transition-duration:1ms!important}
+  .stamp{opacity:.9;transform:rotate(-6deg)}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><i></i></div>
+<button class="mute" id="mute" aria-label="Mute music">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 9h3l5-4v14l-5-4H4z" fill="currentColor" stroke="none"/>
+    <path class="waves" d="M16 8.5a5 5 0 0 1 0 7M18.8 6a8.5 8.5 0 0 1 0 12"/>
+    <path class="cross" d="M16.5 9.5l5 5M21.5 9.5l-5 5"/>
+  </svg>
+</button>
+
+<main>
+  <section class="intro">
+    <div class="inner">
+      <p class="eyebrow">For you · Stop one</p>
+      <h1>Venice</h1>
+      <p class="sub">A slow afternoon in the floating city. Take your time.</p>
+      <button class="begin" id="begin">Begin with music</button>
+    </div>
+    <div class="swipe" aria-hidden="true">
+      <span>Swipe up slowly</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <section class="photo" style="--a:#f3c9a8;--b:#7fa7b8">
+    <div class="pin"><div class="frame" data-q="Grand Canal Venice"><img alt="The Grand Canal at sunrise" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Sunrise</p><h2>Grand Canal</h2><p class="line">Venice wakes up slowly. I think you'd like that about it.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#e8c9a0;--b:#9bb5bd">
+    <div class="pin"><div class="frame" data-q="Rialto bridge"><img alt="The Rialto Bridge over the Grand Canal" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Since 1591</p><h2>Rialto Bridge</h2><p class="line">Over four hundred years old, and still the best spot to watch the boats go by.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#c9d6c8;--b:#6f8f95">
+    <div class="pin"><div class="frame" data-q="Venice canal Cannaregio"><img alt="A quiet side canal between old houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Off the map</p><h2>A quiet canal</h2><p class="line">The nicest corners of Venice are the ones that aren't on any map.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#d7dfe6;--b:#4d6470">
+    <div class="pin"><div class="frame" data-q="gondolas Venice"><img alt="Gondolas moored along the water" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Waiting by the water</p><h2>Gondolas</h2><p class="line">Every gondola is painted black. It's been the rule for centuries.</p></div></div>
+  </section>
+
+  <section class="rest">
+    <div class="inner">
+      <p class="eyebrow">Question 1 of 3</p>
+      <h3>How should we get around?</h3>
+      <div class="options">
+        <button class="opt" data-q="venice-transport" data-a="gondola" data-reply="Slow it is. We're not in a hurry, are we?">A slow gondola</button>
+        <button class="opt" data-q="venice-transport" data-a="water-bus" data-reply="Very practical. I'll pretend I know which stop is ours.">The water bus, like locals</button>
+      </div>
+      <p class="reply" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="photo" style="--a:#efe3cf;--b:#b9a58a">
+    <div class="pin"><div class="frame" data-q="Piazza San Marco"><img alt="St Mark's Square in the early morning" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Early morning</p><h2>St Mark's Square</h2><p class="line">Come early, before the crowds. Just the bells, the pigeons and us.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#f2b7b0;--b:#e9c75f">
+    <div class="pin"><div class="frame" data-q="Burano houses"><img alt="Brightly painted houses on Burano" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They say fishermen painted their houses bright so they could find home through the fog.</p></div></div>
+  </section>
+
+  <section class="rest">
+    <div class="inner">
+      <p class="eyebrow">Question 2 of 3</p>
+      <h3>A little house on Burano. What colour?</h3>
+      <div class="swatches">
+        <button class="sw" style="--c:var(--b-pink)" aria-label="Pink" data-q="burano-house" data-a="pink" data-reply="Pink. Bold choice. The neighbours would approve."></button>
+        <button class="sw" style="--c:var(--b-yellow)" aria-label="Yellow" data-q="burano-house" data-a="yellow" data-reply="Yellow, like a sunny morning every day. I like it."></button>
+        <button class="sw" style="--c:var(--b-blue)" aria-label="Blue" data-q="burano-house" data-a="blue" data-reply="Blue, like the lagoon. Calm and lovely."></button>
+        <button class="sw" style="--c:var(--b-green)" aria-label="Green" data-q="burano-house" data-a="green" data-reply="Green, like the hills you love. Good choice."></button>
+        <button class="sw" style="--c:var(--b-white)" aria-label="White" data-q="burano-house" data-a="white" data-reply="White. Of course. The only white house on Burano, and everyone would know it's yours."></button>
+      </div>
+      <p class="reply" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="photo" style="--a:#f1e2d0;--b:#c8a58c">
+    <div class="pin"><div class="frame" data-q="Venice laundry"><img alt="Washing hanging between old Venetian houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does the laundry look like it belongs in a painting.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#f6d29a;--b:#8b9fb0">
+    <div class="pin"><div class="frame" data-q="Santa Maria della Salute"><img alt="Santa Maria della Salute at golden hour" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Golden hour</p><h2>Santa Maria della Salute</h2><p class="line">Built to give thanks for the end of a plague, almost four hundred years ago.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#e9c8a2;--b:#8a5a44">
+    <div class="pin"><div class="frame" data-q="cicchetti"><img alt="Cicchetti snacks on a bar counter" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Aperitivo time</p><h2>A little bacaro</h2><p class="line">Cicchetti: tiny Venetian snacks, eaten standing at the bar. You pick, I'll pay.</p></div></div>
+  </section>
+
+  <section class="rest">
+    <div class="inner">
+      <p class="eyebrow">Question 3 of 3</p>
+      <h3>Something sweet?</h3>
+      <div class="options">
+        <button class="opt" data-q="venice-sweet" data-a="tiramisu" data-reply="Good call. It was born just up the road, in Treviso.">Tiramisù</button>
+        <button class="opt" data-q="venice-sweet" data-a="gelato" data-reply="Gelato it is. Two scoops, no judging.">Gelato</button>
+      </div>
+      <p class="reply" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="photo" style="--a:#e3c7c0;--b:#6b4b5a">
+    <div class="pin"><div class="frame" data-q="Venetian masks"><img alt="Venetian carnival masks in a shop window" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Carnevale</p><h2>Masks</h2><p class="line">Even behind a mask, I'm fairly sure I'd still recognise you.</p></div></div>
+  </section>
+
+  <section class="photo" style="--a:#f4b98c;--b:#4f6b86">
+    <div class="pin"><div class="frame" data-q="Venice sunset lagoon"><img alt="The Venetian lagoon at sunset" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Sunset</p><h2>The lagoon</h2><p class="line">Then the light turns gold, and nobody needs to say much.</p></div></div>
+  </section>
+
+  <section class="photo deep" style="--a:#efe6d8;--b:#7d9aa3">
+    <div class="pin"><div class="frame" style="--focus:50% 64%" data-q="Venice restaurant canal"><img alt="A small café table beside a canal" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Look closer</p><h2>A table by the water</h2><p class="line">See that little table? Keep going.</p></div>
+      <div class="veil"></div></div>
+  </section>
+
+  <section class="rest note">
+    <div class="inner">
+      <p class="eyebrow">One day</p>
+      <h3>Maybe here.</h3>
+      <p>A cup of tea by the water, a long afternoon, and no rush at all.</p>
+    </div>
+  </section>
+
+  <section class="rest" id="passport">
+    <div class="inner">
+      <div class="passport-card">
+        <p class="eyebrow">Your travel passport</p>
+        <svg class="stamp" viewBox="0 0 220 150" role="img" aria-label="Venice stamp">
+          <defs><filter id="ink"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs>
+          <g filter="url(#ink)">
+            <rect x="5" y="5" width="210" height="140" rx="20" fill="none" stroke="currentColor" stroke-width="3"/>
+            <rect x="13" y="13" width="194" height="124" rx="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <text x="110" y="62" text-anchor="middle" class="st-big">VENEZIA</text>
+            <text x="110" y="84" text-anchor="middle" class="st-small">ITALIA · STOP 1</text>
+            <path d="M72 108 Q110 121 150 106 Q146 115 110 117 Q82 117 72 108Z" fill="currentColor"/>
+            <path d="M140 109 L149 94" stroke="currentColor" stroke-width="2" fill="none"/>
+          </g>
+        </svg>
+        <p class="count">Stamp 1 of 14</p>
+        <p>Next stop: Switzerland. Coming soon.</p>
+        <button class="again" id="again">See Venice again</button>
+      </div>
+      <p class="credit">Photos from Wikimedia Commons, credited on each one</p>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('journey:' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('journey:' + k, JSON.stringify(v)); } catch {} }
+};
+
+/* photos: each scene asks Wikimedia Commons for its best reviewed photo; the soft gradient stays if none arrives */
+const API = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=8'
+  + '&prop=imageinfo&iiprop=url|size|extmetadata&iiextmetadatafilter=Artist|LicenseShortName&iiurlwidth=1800&gsrsearch=';
+const plain = html => new DOMParser().parseFromString(html || '', 'text/html').body.textContent.trim();
+async function candidates(q) {
+  for (const s of [q + ' incategory:Quality_images filetype:bitmap', q + ' filetype:bitmap']) {
+    try {
+      const r = await (await fetch(API + encodeURIComponent(s))).json();
+      const list = Object.values(r.query?.pages || {}).sort((a, b) => a.index - b.index)
+        .filter(p => p.imageinfo?.[0]?.thumburl && p.imageinfo[0].width >= 1200);
+      if (list.length) return list;
+    } catch {}
+  }
+  return [];
+}
+const frames = $$('.frame[data-q]');
+Promise.all(frames.map(f => candidates(f.dataset.q))).then(lists => {
+  const used = new Set(); // never show the same photo twice
+  lists.forEach((list, i) => {
+    const p = list.find(c => !used.has(c.title)); if (!p) return;
+    used.add(p.title);
+    const ii = p.imageinfo[0], m = ii.extmetadata || {}, img = $('img', frames[i]);
+    img.addEventListener('load', () => img.classList.add('ready'), { once: true });
+    img.src = ii.thumburl;
+    const by = document.createElement('p'); by.className = 'by';
+    const a = document.createElement('a'); a.href = ii.descriptionurl; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = ['Photo: ' + (plain(m.Artist?.value) || 'Wikimedia Commons'), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
+    by.append(a); $('.caption', frames[i].closest('.pin')).append(by);
+  });
+});
+
+/* music: a slow generated piano waltz with reverb, no audio files needed */
+let ctx, out, muted = store.get('muted', false), nextBar = 0, bar = 0;
+const hz = n => 440 * Math.pow(2, (n - 69) / 12);
+const chords = [[53,57,60,64],[52,55,59,62],[50,53,57,60],[48,52,55,59]]; // Fmaj7 Em7 Dm7 Cmaj7
+function impulse(sec) {
+  const r = ctx.sampleRate, len = r * sec, b = ctx.createBuffer(2, len, r);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.8); }
+  return b;
+}
+function note(n, t, len, vol) {
+  [[1, 'triangle', vol], [2, 'sine', vol * .25]].forEach(([mul, type, v]) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.value = hz(n) * mul;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + len);
+    o.connect(g); g.connect(ctx.dry); o.start(t); o.stop(t + len + .05);
+  });
+}
+function scheduleBars() {
+  const beat = .62;
+  while (nextBar < ctx.currentTime + 1.5) {
+    const ch = chords[bar % 4], t = nextBar;
+    note(ch[0] - 12, t, 5, .10);
+    [0, 2, 3, 1, 2, 3].forEach((i, k) => note(ch[i] + 12, t + k * beat / 2, 2.6, .045 + Math.random() * .02));
+    if (bar % 2 === 0) note(ch[3] + 24, t + beat * 1.5, 3.2, .03);
+    nextBar += beat * 3; bar++;
+  }
+}
+function initAudio() {
+  if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+  ctx = new AC();
+  out = ctx.createGain(); out.gain.value = .0001; out.connect(ctx.destination);
+  ctx.dry = ctx.createGain(); ctx.dry.gain.value = .55; ctx.dry.connect(out);
+  const verb = ctx.createConvolver(); verb.buffer = impulse(3.4);
+  const wet = ctx.createGain(); wet.gain.value = .7;
+  ctx.dry.connect(verb); verb.connect(wet); wet.connect(out);
+  if (!muted) out.gain.exponentialRampToValueAtTime(.6, ctx.currentTime + 4);
+  nextBar = ctx.currentTime + .1;
+  scheduleBars(); setInterval(scheduleBars, 300);
+}
+function setMute(m) {
+  muted = m; store.set('muted', m);
+  const b = $('#mute'); b.classList.toggle('off', m); b.setAttribute('aria-label', m ? 'Play music' : 'Mute music');
+  if (ctx) { out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(m ? .0001 : .6, ctx.currentTime, .5); }
+}
+setMute(muted);
+$('#mute').addEventListener('click', () => { initAudio(); setMute(!muted); });
+document.addEventListener('visibilitychange', () => { if (ctx) document.hidden ? ctx.suspend() : ctx.resume(); });
+
+const firstScene = $('.photo');
+$('#begin').addEventListener('click', () => { initAudio(); window.scrollTo({ top: firstScene.offsetTop, behavior: 'smooth' }); });
+$('#again').addEventListener('click', () => window.scrollTo({ top: firstScene.offsetTop, behavior: 'smooth' }));
+
+/* questions: one choice per question, remembered on this device */
+const answers = store.get('answers', {});
+function pick(btn, save) {
+  const box = btn.closest('.inner');
+  $$('button[data-q]', box).forEach(b => b.setAttribute('aria-pressed', b === btn));
+  const r = $('.reply', box); r.textContent = btn.dataset.reply; r.classList.add('on');
+  if (save) { answers[btn.dataset.q] = { answer: btn.dataset.a, at: new Date().toISOString() }; store.set('answers', answers); }
+}
+$$('button[data-q]').forEach(b => {
+  b.setAttribute('aria-pressed', 'false');
+  b.addEventListener('click', () => pick(b, true));
+  if (answers[b.dataset.q]?.answer === b.dataset.a) pick(b, false);
+});
+
+/* passport stamp */
+const stamp = () => { $('.passport-card').classList.add('stamped'); store.set('stamps', { ...store.get('stamps', {}), venice: true }); };
+
+if (!window.gsap || !window.ScrollTrigger) { stamp(); return; } // shortcut: without the CDN the page is a plain scroll with no motion
+gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
+
+gsap.to('.progress i', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: .3 } });
+ScrollTrigger.create({ trigger: firstScene, start: 'top 90%', onToggle: s => $('.progress').classList.toggle('on', s.isActive || s.progress > 0) });
+ScrollTrigger.create({ trigger: '#passport', start: 'top 55%', once: true, onEnter: stamp });
+
+const vh = () => window.innerHeight;
+gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+  $$('.photo').forEach((sc, i) => {
+    const frame = $('.frame', sc), lines = $('.caption', sc).children;
+    if (sc.classList.contains('deep')) {
+      gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top top', end: () => '+=' + (sc.offsetHeight - 2 * vh()), scrub: 1.4, invalidateOnRefresh: true } })
+        .fromTo(frame, { scale: 1.04 }, { scale: 3.6, ease: 'power2.in', duration: 1 })
+        .fromTo($('.veil', sc), { opacity: 0 }, { opacity: 1, ease: 'none', duration: .28 }, .72);
+    } else {
+      const drift = i % 2 ? 1.6 : -1.6; // alternate direction so it never feels like a loop
+      gsap.fromTo(frame, { scale: 1.2, xPercent: -drift }, { scale: 1.02, xPercent: drift, ease: 'none',
+        scrollTrigger: { trigger: sc, start: 'top bottom', end: 'bottom top', scrub: 1.2 } });
+    }
+    gsap.timeline({ scrollTrigger: { trigger: sc, start: 'top 35%', end: () => '+=' + vh() * 1.5, scrub: .8, invalidateOnRefresh: true } })
+      .fromTo(lines, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, stagger: .1, duration: .35, ease: 'power2.out' })
+      .to(lines, { autoAlpha: 1, duration: .5 })
+      .to(lines, { autoAlpha: 0, y: -18, stagger: .05, duration: .25 });
+  });
+  $$('.rest .inner').forEach(el => gsap.from(el.children, { autoAlpha: 0, y: 24, stagger: .08, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 80%', once: true } }));
+});
+})();
+</script>
+</body>
+</html>
