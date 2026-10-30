@@ -293,7 +293,7 @@ Promise.all(frames.map(f => candidates(f.dataset.q))).then(lists => {
     img.src = ii.thumburl;
     const by = document.createElement('p'); by.className = 'by';
     const a = document.createElement('a'); a.href = ii.descriptionurl; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = ['Photo: ' + ((plain(m.Artist?.value).split('\n')[0].replace(/^this photo was taken by /i, '').replace(/\.$/, '').slice(0, 48) || 'Wikimedia Commons')), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
+    a.textContent = ['Photo: ' + ((plain(m.Artist?.value).split('\n')[0].trim().replace(/^this photo was taken by /i, '').replace(/\.$/, '').slice(0, 48) || 'Wikimedia Commons')), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
     by.append(a); $('.caption', frames[i].closest('.pin')).append(by);
   });
 });
