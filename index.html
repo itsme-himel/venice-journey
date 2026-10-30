@@ -92,6 +92,26 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
 .mute{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 14px);right:max(16px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--ink);display:grid;place-items:center;box-shadow:0 6px 20px rgba(29,29,31,.12)}
 .mute .waves{transition:opacity .3s}.mute.off .waves{opacity:0}.mute .cross{opacity:0}.mute.off .cross{opacity:1}
 
+
+[hidden]{display:none!important}
+.photo{height:280vh;height:280svh}
+/* activities */
+.pairs{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.pairs .col{display:grid;gap:.6rem;align-content:start}
+.opt.done{opacity:.5;pointer-events:none;border-color:var(--lagoon);color:var(--lagoon)}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.tiles{position:relative;width:100%;aspect-ratio:3/2;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:16px;overflow:hidden;background:var(--hair);touch-action:manipulation}
+.tile{border:0;padding:0;background-color:var(--paper-2);background-size:300% 300%;transition:box-shadow .25s}
+.tile[aria-pressed="true"]{box-shadow:inset 0 0 0 3px var(--lagoon)}
+.tiles.solved{gap:0}
+.peekimg{position:absolute;inset:0;background-size:100% 100%;opacity:0;pointer-events:none;transition:opacity .35s}
+.tiles.peek .peekimg{opacity:1}
+.link{border:0;background:none;color:var(--lagoon);font-size:.95rem;padding:.5rem 1rem}
+.scratch{position:relative;width:100%;max-width:24rem;height:9.5rem;border-radius:18px;overflow:hidden;background:var(--paper-2);border:1px solid var(--hair);display:grid;place-items:center;padding:1.2rem;text-align:center}
+.scratch .under{font-family:var(--display);font-size:1.2rem;line-height:1.35;font-style:italic}
+.scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .9s var(--ease)}
+.scratch canvas.gone{opacity:0;pointer-events:none}
 @media (max-width:440px){.options{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:1ms!important;transition-duration:1ms!important}
@@ -125,25 +145,28 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </section>
 
   <section class="photo" style="--a:#f3c9a8;--b:#7fa7b8">
-    <div class="pin"><div class="frame" data-q="Grand Canal Venice"><img alt="The Grand Canal at sunrise" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Canal Grande in the sunrise 20040908.jpg"><img alt="The Grand Canal at sunrise with the Salute church in the distance" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Sunrise</p><h2>Grand Canal</h2><p class="line">Venice wakes up slowly. I think you'd like that about it.</p></div></div>
   </section>
-
   <section class="photo" style="--a:#e8c9a0;--b:#9bb5bd">
-    <div class="pin"><div class="frame" data-q="Rialto bridge"><img alt="The Rialto Bridge over the Grand Canal" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Ponte di Rialto Venice 1.jpg"><img alt="The Rialto Bridge at golden hour" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Since 1591</p><h2>Rialto Bridge</h2><p class="line">Over four hundred years old, and still the best spot to watch the boats go by.</p></div></div>
   </section>
-
+  <section class="rest" id="act-words"><div class="inner">
+      <p class="eyebrow">Little game</p>
+      <h3>Say it like a Venetian</h3>
+      <p>Match each Italian word with its meaning.</p>
+      <div class="pairs"><div class="col" id="it"></div><div class="col" id="en"></div></div>
+      <p class="reply" aria-live="polite"></p>
+  </div></section>
   <section class="photo" style="--a:#c9d6c8;--b:#6f8f95">
-    <div class="pin"><div class="frame" data-q="Venice canal Cannaregio"><img alt="A quiet side canal between old houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Rio Ca' Michiel (Venice).jpg"><img alt="A narrow quiet canal between old houses" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Off the map</p><h2>A quiet canal</h2><p class="line">The nicest corners of Venice are the ones that aren't on any map.</p></div></div>
   </section>
-
   <section class="photo" style="--a:#d7dfe6;--b:#4d6470">
-    <div class="pin"><div class="frame" data-q="gondolas Venice"><img alt="Gondolas moored along the water" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:San Marco Pier 1 (69655534).jpg"><img alt="Gondolas moored near St Mark's" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Waiting by the water</p><h2>Gondolas</h2><p class="line">Every gondola is painted black. It's been the rule for centuries.</p></div></div>
   </section>
-
   <section class="rest">
     <div class="inner">
       <p class="eyebrow">Question 1 of 3</p>
@@ -155,17 +178,28 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
       <p class="reply" aria-live="polite"></p>
     </div>
   </section>
-
   <section class="photo" style="--a:#efe3cf;--b:#b9a58a">
-    <div class="pin"><div class="frame" data-q="Piazza San Marco"><img alt="St Mark's Square in the early morning" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Piazzetta San Marco, Venice, at Dawn - Flickr - blieusong.jpg"><img alt="The Piazzetta San Marco at dawn" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Early morning</p><h2>St Mark's Square</h2><p class="line">Come early, before the crowds. Just the bells, the pigeons and us.</p></div></div>
   </section>
-
+  <section class="rest" id="act-bridges"><div class="inner">
+      <p class="eyebrow">Little game</p>
+      <h3>How many bridges does Venice have?</h3>
+      <div class="options" id="guess"></div>
+      <p class="reply" aria-live="polite"></p>
+  </div></section>
   <section class="photo" style="--a:#f2b7b0;--b:#e9c75f">
-    <div class="pin"><div class="frame" data-q="Burano canal"><img alt="Brightly painted houses on Burano" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Burano - canal and colourful houses (35262836603).jpg"><img alt="A canal lined with brightly painted houses on Burano" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They say fishermen painted their houses bright so they could find home through the fog.</p></div></div>
   </section>
-
+  <section class="rest" id="act-puzzle"><div class="inner">
+      <p class="eyebrow">Little puzzle</p>
+      <h3>Put Burano back together</h3>
+      <p>Tap two pieces to swap them.</p>
+      <div class="tiles" id="tiles"><div class="peekimg"></div></div>
+      <button class="link" id="peek">Peek at the picture</button>
+      <p class="reply" aria-live="polite"></p>
+  </div></section>
   <section class="rest">
     <div class="inner">
       <p class="eyebrow">Question 2 of 3</p>
@@ -180,22 +214,23 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
       <p class="reply" aria-live="polite"></p>
     </div>
   </section>
-
   <section class="photo" style="--a:#f1e2d0;--b:#c8a58c">
-    <div class="pin"><div class="frame" data-q="Burano laundry"><img alt="Washing hanging between old Venetian houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Calle dei Olivi, Castello, Laundry Day In Venice (59269042).jpg"><img alt="Washing hanging across a Venetian street" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does the laundry look like it belongs in a painting.</p></div></div>
   </section>
-
   <section class="photo" style="--a:#f6d29a;--b:#8b9fb0">
-    <div class="pin"><div class="frame" data-q="Santa Maria della Salute"><img alt="Santa Maria della Salute at golden hour" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Basilica Santa Maria della Salute Dorsoduro Venezia.jpg"><img alt="Santa Maria della Salute" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Golden hour</p><h2>Santa Maria della Salute</h2><p class="line">Built to give thanks for the end of a plague, almost four hundred years ago.</p></div></div>
   </section>
-
+  <section class="rest" id="act-scratch"><div class="inner">
+      <p class="eyebrow">A little secret</p>
+      <h3>Scratch to find out</h3>
+      <div class="scratch"><p class="under">I'd happily miss the water bus if it meant a longer walk with you.</p><canvas aria-label="Scratch card"></canvas></div>
+  </div></section>
   <section class="photo" style="--a:#e9c8a2;--b:#8a5a44">
-    <div class="pin"><div class="frame" data-q="cicchetti"><img alt="Cicchetti snacks on a bar counter" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Cicchetti Venezia (1).jpg"><img alt="Cicchetti on a bar counter" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Aperitivo time</p><h2>A little bacaro</h2><p class="line">Cicchetti: tiny Venetian snacks, eaten standing at the bar. You pick, I'll pay.</p></div></div>
   </section>
-
   <section class="rest">
     <div class="inner">
       <p class="eyebrow">Question 3 of 3</p>
@@ -207,23 +242,19 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
       <p class="reply" aria-live="polite"></p>
     </div>
   </section>
-
   <section class="photo" style="--a:#e3c7c0;--b:#6b4b5a">
-    <div class="pin"><div class="frame" data-q="Venetian masks"><img alt="Venetian carnival masks in a shop window" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Venetian Carnival Mask - Maschera di Carnevale - Venice Italy - Creative Commons by gnuckx (4816122213).jpg"><img alt="A white Venetian carnival mask" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Carnevale</p><h2>Masks</h2><p class="line">Even behind a mask, I'm fairly sure I'd still recognise you.</p></div></div>
   </section>
-
   <section class="photo" style="--a:#f4b98c;--b:#4f6b86">
-    <div class="pin"><div class="frame" data-q="Venice sunset gondola"><img alt="The Venetian lagoon at sunset" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-file="File:Gondolieri.jpg"><img alt="A gondola on the lagoon at sunset" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Sunset</p><h2>The lagoon</h2><p class="line">Then the light turns gold, and nobody needs to say much.</p></div></div>
   </section>
-
   <section class="photo deep" style="--a:#efe6d8;--b:#7d9aa3">
-    <div class="pin"><div class="frame" style="--focus:50% 64%" data-q="Caffè Florian"><img alt="Café tables at Caffè Florian" loading="lazy" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Since 1720</p><h2>Caffè Florian</h2><p class="line">See that little table? Keep going.</p></div>
+    <div class="pin"><div class="frame" style="--focus:50% 70%" data-file="File:Caffè Florian (50427073898).jpg"><img alt="Tables and umbrellas outside Caffè Florian" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Since 1720</p><h2>Caffè Florian</h2><p class="line">Pick a little table. We're going closer.</p></div>
       <div class="veil"></div></div>
   </section>
-
   <section class="rest note">
     <div class="inner">
       <p class="eyebrow">One day</p>
@@ -248,6 +279,7 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
           </g>
         </svg>
         <p class="count">Stamp 1 of 14</p>
+        <p id="games" class="credit"></p>
         <p>Next stop: Switzerland. Coming soon.</p>
         <button class="again" id="again">See Venice again</button>
       </div>
@@ -267,36 +299,26 @@ const store = {
   set(k, v) { try { localStorage.setItem('journey:' + k, JSON.stringify(v)); } catch {} }
 };
 
-/* photos: each scene asks Wikimedia Commons for its best reviewed photo; the soft gradient stays if none arrives */
-const API = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=8'
-  + '&prop=imageinfo&iiprop=url|size|extmetadata&iiextmetadatafilter=Artist|LicenseShortName&iiurlwidth=1800&gsrsearch=';
+/* photos: pinned Wikimedia Commons files, fetched in one request; the soft gradient stays if one is missing */
+const API = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url|extmetadata'
+  + '&iiextmetadatafilter=Artist|LicenseShortName&iiurlwidth=1800&titles=';
 const plain = html => new DOMParser().parseFromString(html || '', 'text/html').body.textContent.trim();
-async function candidates(q) {
-  for (const s of [q + ' incategory:Quality_images filetype:bitmap', q + ' filetype:bitmap -painting -Canaletto -Guardi']) {
-    try {
-      const r = await (await fetch(API + encodeURIComponent(s))).json();
-      const list = Object.values(r.query?.pages || {}).sort((a, b) => a.index - b.index)
-        .filter(p => p.imageinfo?.[0]?.thumburl && p.imageinfo[0].width >= 1200);
-      if (list.length) return list;
-    } catch {}
-  }
-  return [];
-}
-const frames = $$('.frame[data-q]');
-Promise.all(frames.map(f => candidates(f.dataset.q))).then(lists => {
-  const used = new Set(); // never show the same photo twice
-  lists.forEach((list, i) => {
-    const p = list.find(c => !used.has(c.title)); if (!p) return;
-    used.add(p.title);
-    const ii = p.imageinfo[0], m = ii.extmetadata || {}, img = $('img', frames[i]);
+const frames = $$('.frame[data-file]');
+const photoUrl = {};
+const photosReady = fetch(API + encodeURIComponent(frames.map(f => f.dataset.file).join('|'))).then(r => r.json()).then(r => {
+  const norm = Object.fromEntries((r.query.normalized || []).map(n => [n.from, n.to]));
+  const byTitle = Object.fromEntries(Object.values(r.query.pages).map(p => [p.title, p]));
+  frames.forEach(f => {
+    const ii = byTitle[norm[f.dataset.file] || f.dataset.file]?.imageinfo?.[0]; if (!ii) return;
+    const img = $('img', f), m = ii.extmetadata || {};
     img.addEventListener('load', () => img.classList.add('ready'), { once: true });
-    img.src = ii.thumburl;
+    img.src = photoUrl[f.dataset.file] = ii.thumburl || ii.url;
     const by = document.createElement('p'); by.className = 'by';
     const a = document.createElement('a'); a.href = ii.descriptionurl; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = ['Photo: ' + ((plain(m.Artist?.value).split('\n')[0].trim().replace(/^this photo was taken by /i, '').replace(/\.$/, '').slice(0, 48) || 'Wikimedia Commons')), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
-    by.append(a); $('.caption', frames[i].closest('.pin')).append(by);
+    a.textContent = ['Photo: ' + (plain(m.Artist?.value).split('\n')[0].trim().replace(/^this photo was taken by /i, '').replace(/\.$/, '').slice(0, 48) || 'Wikimedia Commons'), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
+    by.append(a); $('.caption', f.closest('.pin')).append(by);
   });
-});
+}).catch(() => {});
 
 /* music: a slow generated piano waltz with reverb, no audio files needed */
 let ctx, out, muted = store.get('muted', false), nextBar = 0, bar = 0;
@@ -365,6 +387,83 @@ $$('button[data-q]').forEach(b => {
   if (answers[b.dataset.q]?.answer === b.dataset.a) pick(b, false);
 });
 
+/* activities: small games between the photos; each one counts toward the passport */
+const done = store.get('done', {});
+const countEl = $('#games');
+const showCount = () => { if (countEl) countEl.textContent = 'Puzzles solved: ' + Object.keys(done).length + ' of 4'; };
+const finish = (key, box, msg) => { done[key] = 1; store.set('done', done); showCount(); if (box) { const r = $('.reply', box); r.textContent = msg; r.classList.add('on'); } };
+const shake = el => { el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); };
+showCount();
+
+(() => { // 1. match the Italian words
+  const box = $('#act-words .inner'), pairs = [['Piano piano', 'Slowly, slowly'], ['Grazie', 'Thank you'], ['Andiamo', "Let's go"], ['Bellissimo', 'Very beautiful']];
+  const mk = (col, t, k) => { const b = document.createElement('button'); b.className = 'opt'; b.textContent = t; b.dataset.k = k; b.setAttribute('aria-pressed', 'false'); $('#' + col).append(b); return b; };
+  pairs.forEach(([it], k) => mk('it', it, k));
+  pairs.map((p, k) => [p[1], k]).sort(() => Math.random() - .5).forEach(([en, k]) => mk('en', en, k));
+  let sel = null, left = pairs.length;
+  $$('.opt', box).forEach(b => b.addEventListener('click', () => {
+    const side = b.parentElement.id;
+    if (!sel || sel.parentElement.id === side) { if (sel) sel.setAttribute('aria-pressed', 'false'); sel = b; b.setAttribute('aria-pressed', 'true'); return; }
+    if (sel.dataset.k === b.dataset.k) {
+      [sel, b].forEach(x => { x.setAttribute('aria-pressed', 'false'); x.classList.add('done'); });
+      if (!--left) finish('words', box, 'Piano piano: slowly, slowly. I think that is exactly how you like to travel.');
+    } else { shake(sel); shake(b); sel.setAttribute('aria-pressed', 'false'); }
+    sel = null;
+  }));
+})();
+
+(() => { // 2. how many bridges
+  const box = $('#act-bridges .inner'), wrap = $('#guess');
+  [['40', 0], ['150', 0], ['About 400', 1], ['Over 1,000', 0]].forEach(([t, ok]) => {
+    const b = document.createElement('button'); b.className = 'opt'; b.textContent = t; wrap.append(b);
+    b.addEventListener('click', () => {
+      if (ok) { b.setAttribute('aria-pressed', 'true'); finish('bridges', box, 'About 400. Plenty of time to cross them slowly.'); }
+      else { shake(b); const r = $('.reply', box); r.textContent = 'Not quite, have another go.'; r.classList.add('on'); }
+    });
+  });
+})();
+
+const puzzle = url => { // 3. swap-the-tiles puzzle made from the Burano photo
+  const grid = $('#tiles'), box = grid.closest('.inner');
+  grid.querySelector('.peekimg').style.backgroundImage = `url("${url}")`;
+  let ord = [...Array(9).keys()];
+  do { ord.sort(() => Math.random() - .5); } while (ord.every((v, i) => v === i));
+  const btns = ord.map(() => { const b = document.createElement('button'); b.className = 'tile'; b.setAttribute('aria-label', 'Puzzle piece'); b.style.backgroundImage = `url("${url}")`; grid.append(b); return b; });
+  const paint = () => btns.forEach((b, p) => { const t = ord[p]; b.style.backgroundPosition = `${(t % 3) * 50}% ${Math.floor(t / 3) * 50}%`; });
+  paint(); let sel = -1;
+  btns.forEach((b, p) => b.addEventListener('click', () => {
+    if (grid.classList.contains('solved')) return;
+    if (sel < 0) { sel = p; b.setAttribute('aria-pressed', 'true'); return; }
+    btns[sel].setAttribute('aria-pressed', 'false');
+    if (sel !== p) { [ord[sel], ord[p]] = [ord[p], ord[sel]]; paint(); }
+    sel = -1;
+    if (ord.every((v, i) => v === i)) { grid.classList.add('solved'); $('#peek').hidden = true; finish('puzzle', box, 'Burano, all painted again. Nicely done.'); }
+  }));
+  $('#peek').addEventListener('click', () => { grid.classList.add('peek'); setTimeout(() => grid.classList.remove('peek'), 1400); });
+};
+photosReady.then(() => { const u = photoUrl[$('.frame[data-file*="Burano"]').dataset.file]; if (u) puzzle(u); else $('#act-puzzle').hidden = true; });
+
+(() => { // 4. scratch card; shortcut: drawn once at load, not redrawn if the window is resized
+  const wrap = $('.scratch'), cv = $('canvas', wrap), r = wrap.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+  cv.width = r.width * dpr; cv.height = r.height * dpr;
+  const g = cv.getContext('2d'); g.scale(dpr, dpr);
+  const grad = g.createLinearGradient(0, 0, r.width, r.height); grad.addColorStop(0, '#9fc5c0'); grad.addColorStop(1, '#d9e8e5');
+  g.fillStyle = grad; g.fillRect(0, 0, r.width, r.height);
+  g.fillStyle = 'rgba(255,255,255,.9)'; g.font = '500 15px -apple-system, "Segoe UI", sans-serif'; g.textAlign = 'center'; g.fillText('SCRATCH HERE', r.width / 2, r.height / 2 + 5);
+  g.globalCompositeOperation = 'destination-out'; g.lineWidth = 44; g.lineCap = 'round';
+  let last = null;
+  const pt = e => { const b = cv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  cv.addEventListener('pointerdown', e => { cv.setPointerCapture(e.pointerId); last = pt(e); });
+  cv.addEventListener('pointermove', e => { if (!last) return; const p = pt(e); g.beginPath(); g.moveTo(...last); g.lineTo(...p); g.stroke(); last = p; });
+  const up = () => {
+    if (!last) return; last = null;
+    const d = g.getImageData(0, 0, cv.width, cv.height).data; let clear = 0, n = 0;
+    for (let i = 3; i < d.length; i += 64) { n++; if (!d[i]) clear++; }
+    if (clear / n > .45 && !cv.classList.contains('gone')) { cv.classList.add('gone'); finish('scratch'); }
+  };
+  ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, up));
+})();
+
 /* passport stamp */
 const stamp = () => { $('.passport-card').classList.add('stamped'); store.set('stamps', { ...store.get('stamps', {}), venice: true }); };
 
@@ -394,7 +493,7 @@ gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
       .to(lines, { autoAlpha: 1, duration: .5 })
       .to(lines, { autoAlpha: 0, y: -18, stagger: .05, duration: .25 });
   });
-  $$('.rest .inner').forEach(el => gsap.from(el.children, { autoAlpha: 0, y: 24, stagger: .08, duration: 1, ease: 'power3.out',
+  $$('.rest .inner').forEach(el => gsap.from($$(':scope > :not(.reply)', el), { autoAlpha: 0, y: 24, stagger: .08, duration: 1, ease: 'power3.out', clearProps: 'all',
     scrollTrigger: { trigger: el, start: 'top 80%', once: true } }));
 });
 })();
