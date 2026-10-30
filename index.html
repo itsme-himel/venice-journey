@@ -95,6 +95,8 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
 
 [hidden]{display:none!important}
 .photo{height:280vh;height:280svh}
+.photo.has-card{height:340vh;height:340svh}
+.photo.deep.has-card{height:460vh;height:460svh}
 /* activities */
 .pairs{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
 .pairs .col{display:grid;gap:.6rem;align-content:start}
@@ -112,6 +114,24 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
 .scratch .under{font-family:var(--display);font-size:1.2rem;line-height:1.35;font-style:italic}
 .scratch canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;transition:opacity .9s var(--ease)}
 .scratch canvas.gone{opacity:0;pointer-events:none}
+
+/* question cards on photos */
+.qcard{position:absolute;left:0;right:0;bottom:0;z-index:5;margin-inline:auto;width:min(100%,34rem);max-height:46vh;max-height:46svh;overflow:auto;background:var(--paper);border-radius:22px 22px 0 0;padding:1.3rem var(--gr) calc(1.1rem + env(safe-area-inset-bottom,0px)) var(--gl);display:grid;gap:.8rem;box-shadow:0 -20px 50px rgba(0,0,0,.25);transform:translateY(105%);transition:transform .7s var(--ease)}
+.qcard.show{transform:none}
+.qcard .qp{font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,5.4vw,1.7rem);line-height:1.15;text-wrap:balance}
+.qopts{display:grid;gap:.55rem}.qopts.two{grid-template-columns:1fr 1fr}
+.qcard .opt{padding:.85rem .9rem;font-size:.98rem}
+.qcard .reply{min-height:0;text-align:center;font-size:1rem;max-width:none}
+.qcard .reply:empty{display:none}
+.qcard .skip{justify-self:center;border:0;background:none;color:var(--mute);font-size:.9rem;padding:.4rem .8rem}
+.qslide{display:grid;gap:.4rem}
+.qslide input{width:100%;accent-color:var(--lagoon);height:2rem}
+.qslide .ends{display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:var(--mute)}
+.qcard textarea{width:100%;font:inherit;font-size:1rem;border:1px solid var(--hair);border-radius:14px;padding:.8rem .9rem;resize:none;background:var(--paper);color:var(--ink)}
+.qcard textarea:focus-visible,.qslide input:focus-visible{outline:2px solid var(--lagoon);outline-offset:2px}
+.send{border:0;border-radius:999px;background:var(--ink);color:var(--paper);padding:.85rem 1.6rem;font-size:1rem;font-weight:500}
+.send:disabled{opacity:.35}
+.carded .caption{opacity:0!important;visibility:hidden!important}
 @media (max-width:440px){.options{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:1ms!important;transition-duration:1ms!important}
@@ -167,27 +187,10 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
     <div class="pin"><div class="frame" data-file="File:San Marco Pier 1 (69655534).jpg"><img alt="Gondolas moored near St Mark's" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Waiting by the water</p><h2>Gondolas</h2><p class="line">Every gondola is painted black. It's been the rule for centuries.</p></div></div>
   </section>
-  <section class="rest">
-    <div class="inner">
-      <p class="eyebrow">Question 1 of 3</p>
-      <h3>How should we get around?</h3>
-      <div class="options">
-        <button class="opt" data-q="venice-transport" data-a="gondola" data-reply="Slow it is. We're not in a hurry, are we?">A slow gondola</button>
-        <button class="opt" data-q="venice-transport" data-a="water-bus" data-reply="Very practical. I'll pretend I know which stop is ours.">The water bus, like locals</button>
-      </div>
-      <p class="reply" aria-live="polite"></p>
-    </div>
-  </section>
   <section class="photo" style="--a:#efe3cf;--b:#b9a58a">
     <div class="pin"><div class="frame" data-file="File:Piazzetta San Marco, Venice, at Dawn - Flickr - blieusong.jpg"><img alt="The Piazzetta San Marco at dawn" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Early morning</p><h2>St Mark's Square</h2><p class="line">Come early, before the crowds. Just the bells, the pigeons and us.</p></div></div>
   </section>
-  <section class="rest" id="act-bridges"><div class="inner">
-      <p class="eyebrow">Little game</p>
-      <h3>How many bridges does Venice have?</h3>
-      <div class="options" id="guess"></div>
-      <p class="reply" aria-live="polite"></p>
-  </div></section>
   <section class="photo" style="--a:#f2b7b0;--b:#e9c75f">
     <div class="pin"><div class="frame" data-file="File:Burano - canal and colourful houses (35262836603).jpg"><img alt="A canal lined with brightly painted houses on Burano" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They say fishermen painted their houses bright so they could find home through the fog.</p></div></div>
@@ -200,20 +203,6 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
       <button class="link" id="peek">Peek at the picture</button>
       <p class="reply" aria-live="polite"></p>
   </div></section>
-  <section class="rest">
-    <div class="inner">
-      <p class="eyebrow">Question 2 of 3</p>
-      <h3>A little house on Burano. What colour?</h3>
-      <div class="swatches">
-        <button class="sw" style="--c:var(--b-pink)" aria-label="Pink" data-q="burano-house" data-a="pink" data-reply="Pink. Bold choice. The neighbours would approve."></button>
-        <button class="sw" style="--c:var(--b-yellow)" aria-label="Yellow" data-q="burano-house" data-a="yellow" data-reply="Yellow, like a sunny morning every day. I like it."></button>
-        <button class="sw" style="--c:var(--b-blue)" aria-label="Blue" data-q="burano-house" data-a="blue" data-reply="Blue, like the lagoon. Calm and lovely."></button>
-        <button class="sw" style="--c:var(--b-green)" aria-label="Green" data-q="burano-house" data-a="green" data-reply="Green, like the hills you love. Good choice."></button>
-        <button class="sw" style="--c:var(--b-white)" aria-label="White" data-q="burano-house" data-a="white" data-reply="White. Of course. The only white house on Burano, and everyone would know it's yours."></button>
-      </div>
-      <p class="reply" aria-live="polite"></p>
-    </div>
-  </section>
   <section class="photo" style="--a:#f1e2d0;--b:#c8a58c">
     <div class="pin"><div class="frame" data-file="File:Calle dei Olivi, Castello, Laundry Day In Venice (59269042).jpg"><img alt="Washing hanging across a Venetian street" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does the laundry look like it belongs in a painting.</p></div></div>
@@ -222,6 +211,13 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
     <div class="pin"><div class="frame" data-file="File:Basilica Santa Maria della Salute Dorsoduro Venezia.jpg"><img alt="Santa Maria della Salute" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Golden hour</p><h2>Santa Maria della Salute</h2><p class="line">Built to give thanks for the end of a plague, almost four hundred years ago.</p></div></div>
   </section>
+  <section class="rest" id="act-riddle"><div class="inner">
+      <p class="eyebrow">A small riddle</p>
+      <h3>What am I?</h3>
+      <p>I have no wheels and no road, yet every Venetian travels on me.</p>
+      <div class="qopts two" id="riddle-opts"></div>
+      <p class="reply" aria-live="polite"></p>
+  </div></section>
   <section class="rest" id="act-scratch"><div class="inner">
       <p class="eyebrow">A little secret</p>
       <h3>Scratch to find out</h3>
@@ -230,17 +226,6 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   <section class="photo" style="--a:#e9c8a2;--b:#8a5a44">
     <div class="pin"><div class="frame" data-file="File:Cicchetti Venezia (1).jpg"><img alt="Cicchetti on a bar counter" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Aperitivo time</p><h2>A little bacaro</h2><p class="line">Cicchetti: tiny Venetian snacks, eaten standing at the bar. You pick, I'll pay.</p></div></div>
-  </section>
-  <section class="rest">
-    <div class="inner">
-      <p class="eyebrow">Question 3 of 3</p>
-      <h3>Something sweet?</h3>
-      <div class="options">
-        <button class="opt" data-q="venice-sweet" data-a="tiramisu" data-reply="Good call. It was born just up the road, in Treviso.">Tiramisù</button>
-        <button class="opt" data-q="venice-sweet" data-a="gelato" data-reply="Gelato it is. Two scoops, no judging.">Gelato</button>
-      </div>
-      <p class="reply" aria-live="polite"></p>
-    </div>
   </section>
   <section class="photo" style="--a:#e3c7c0;--b:#6b4b5a">
     <div class="pin"><div class="frame" data-file="File:Venetian Carnival Mask - Maschera di Carnevale - Venice Italy - Creative Commons by gnuckx (4816122213).jpg"><img alt="A white Venetian carnival mask" decoding="async"></div><div class="scrim"></div>
@@ -286,6 +271,13 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
       <p class="credit">Photos from Wikimedia Commons, credited on each one</p>
     </div>
   </section>
+  <section class="rest" id="send"><div class="inner">
+      <p class="eyebrow">One last thing</p>
+      <h3>Want to send me your answers?</h3>
+      <p>Only if you like. Pick any app, and they come to me as a message.</p>
+      <button class="send" id="sendbtn">Send my answers</button>
+      <p id="sendnote" class="credit" aria-live="polite"></p>
+  </div></section>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -373,27 +365,24 @@ const firstScene = $('.photo');
 $('#begin').addEventListener('click', () => { initAudio(); window.scrollTo({ top: firstScene.offsetTop, behavior: 'smooth' }); });
 $('#again').addEventListener('click', () => window.scrollTo({ top: firstScene.offsetTop, behavior: 'smooth' }));
 
-/* questions: one choice per question, remembered on this device */
-const answers = store.get('answers', {});
-function pick(btn, save) {
-  const box = btn.closest('.inner');
-  $$('button[data-q]', box).forEach(b => b.setAttribute('aria-pressed', b === btn));
-  const r = $('.reply', box); r.textContent = btn.dataset.reply; r.classList.add('on');
-  if (save) { answers[btn.dataset.q] = { answer: btn.dataset.a, at: new Date().toISOString() }; store.set('answers', answers); }
-}
-$$('button[data-q]').forEach(b => {
-  b.setAttribute('aria-pressed', 'false');
-  b.addEventListener('click', () => pick(b, true));
-  if (answers[b.dataset.q]?.answer === b.dataset.a) pick(b, false);
-});
-
 /* activities: small games between the photos; each one counts toward the passport */
 const done = store.get('done', {});
 const countEl = $('#games');
-const showCount = () => { if (countEl) countEl.textContent = 'Puzzles solved: ' + Object.keys(done).length + ' of 4'; };
+const showCount = () => { if (countEl) countEl.textContent = 'Puzzles solved: ' + Object.keys(done).length + ' of 5 \u00b7 Questions answered: ' + Object.keys(store.get('answers', {})).length + ' of ' + CARDS.length; };
 const finish = (key, box, msg) => { done[key] = 1; store.set('done', done); showCount(); if (box) { const r = $('.reply', box); r.textContent = msg; r.classList.add('on'); } };
 const shake = el => { el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); };
-showCount();
+
+(() => { // riddle
+  const box = $('#act-riddle .inner'), wrap = $('#riddle-opts');
+  [['A bridge'], ['A canal', 1], ['A gondola'], ['A water bus']].forEach(([t, ok]) => {
+    const b = document.createElement('button'); b.className = 'opt'; b.textContent = t; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', () => {
+      if (!ok) { shake(b); $('.reply', box).textContent = 'Not quite, have another go.'; $('.reply', box).classList.add('on'); return; }
+      b.setAttribute('aria-pressed', 'true'); finish('riddle', box, "Water, of course. Venice's only road.");
+    });
+    wrap.append(b);
+  });
+})();
 
 (() => { // 1. match the Italian words
   const box = $('#act-words .inner'), pairs = [['Piano piano', 'Slowly, slowly'], ['Grazie', 'Thank you'], ['Andiamo', "Let's go"], ['Bellissimo', 'Very beautiful']];
@@ -410,17 +399,6 @@ showCount();
     } else { shake(sel); shake(b); sel.setAttribute('aria-pressed', 'false'); }
     sel = null;
   }));
-})();
-
-(() => { // 2. how many bridges
-  const box = $('#act-bridges .inner'), wrap = $('#guess');
-  [['40', 0], ['150', 0], ['About 400', 1], ['Over 1,000', 0]].forEach(([t, ok]) => {
-    const b = document.createElement('button'); b.className = 'opt'; b.textContent = t; wrap.append(b);
-    b.addEventListener('click', () => {
-      if (ok) { b.setAttribute('aria-pressed', 'true'); finish('bridges', box, 'About 400. Plenty of time to cross them slowly.'); }
-      else { shake(b); const r = $('.reply', box); r.textContent = 'Not quite, have another go.'; r.classList.add('on'); }
-    });
-  });
 })();
 
 const puzzle = url => { // 3. swap-the-tiles puzzle made from the Burano photo
@@ -463,6 +441,144 @@ photosReady.then(() => { const u = photoUrl[$('.frame[data-file*="Burano"]').dat
   };
   ['pointerup', 'pointercancel'].forEach(ev => cv.addEventListener(ev, up));
 })();
+
+/* question cards: a white sheet slides up over the photo, the page waits until she answers or skips */
+const CARDS = [
+  { id: 'bridges', photo: 'Ponte di Rialto', kind: 'choice', prompt: 'How many bridges does Venice have?', done: 'bridges', options: [
+    { label: '40', value: '40' }, { label: '150', value: '150' },
+    { label: 'About 400', value: '400', correct: true, reply: 'About 400. Plenty of time to cross them slowly.' }, { label: 'Over 1,000', value: '1000' }] },
+  { id: 'transport', photo: 'San Marco Pier', kind: 'choice', prompt: 'How should we get around?', options: [
+    { label: 'A slow gondola', value: 'gondola', reply: "Slow it is. We're not in a hurry, are we?" },
+    { label: 'The water bus, like locals', value: 'water-bus', reply: "Very practical. I'll pretend I know which stop is ours." }] },
+  { id: 'burano', photo: 'Burano', kind: 'choice', prompt: 'A little house on Burano. What colour?', options: [
+    { label: 'Pink', value: 'pink', reply: 'Pink. Bold choice. The neighbours would approve.' },
+    { label: 'Yellow', value: 'yellow', reply: 'Yellow, like a sunny morning every day. I like it.' },
+    { label: 'Blue', value: 'blue', reply: 'Blue, like the lagoon. Calm and lovely.' },
+    { label: 'Green', value: 'green', reply: 'Green, like the hills you love. Good choice.' },
+    { label: 'White', value: 'white', reply: "White. Of course. The only white house on Burano, and everyone would know it's yours." }] },
+  { id: 'sweet', photo: 'Cicchetti', kind: 'choice', prompt: 'Something sweet?', options: [
+    { label: 'Tiramisù', value: 'tiramisu', reply: 'Good call. It was born just up the road, in Treviso.' },
+    { label: 'Gelato', value: 'gelato', reply: 'Gelato it is. Two scoops, no judging.' }] },
+  { id: 'morning', photo: 'Canal Grande in the sunrise', kind: 'choice', prompt: 'Slow morning or sunrise adventure?', options: [
+    { label: 'A slow morning', value: 'slow', reply: 'Coffee, a window, no alarm. I am in.' },
+    { label: 'A sunrise adventure', value: 'sunrise', reply: 'Then I will set two alarms and hope for the best.' }] },
+  { id: 'formal', photo: 'Piazzetta San Marco', kind: 'slider', prompt: 'Be honest: how formal am I?', ends: ['Tea with the king', 'Pizza on the floor'] },
+  { id: 'washing', photo: 'Calle dei Olivi', kind: 'choice', prompt: 'Who hangs the washing out?', options: [
+    { label: 'I do', value: 'me', reply: 'Brave. I will pass you the pegs.' },
+    { label: 'You do', value: 'you', reply: 'Fair. I will supervise very seriously.' },
+    { label: 'We argue about it first', value: 'argue', reply: 'Realistic. I will bring snacks for the argument.' }] },
+  { id: 'peace', photo: 'Basilica Santa Maria', kind: 'text', prompt: 'Where do you feel most at peace?', thanks: 'Thank you for telling me. I would like to see that place one day.' },
+  { id: 'watching', photo: 'Venetian Carnival Mask', kind: 'text', prompt: 'Who are you when nobody is watching?', thanks: 'I like that you told me.' },
+  { id: 'evening', photo: 'Gondolieri', kind: 'text', prompt: 'What does a good evening look like for you?', thanks: 'That sounds lovely. Noted.' },
+  { id: 'home', photo: 'Caff\u00e8 Florian', kind: 'text', prompt: 'What does home feel like to you?', thanks: 'Thank you. That is lovely to know.' },
+];
+const TIERS = ['Tea with the king. Very proper. I will bow when I pour the tea.', 'Quite formal. I iron my jeans.', 'Smart casual. A shirt with the top button bravely open.', 'Relaxed. I might even laugh out loud in public.', 'Pizza on the floor. Who is this person? Fine, I will try.'];
+const sliderReply = v => TIERS[Math.min(4, Math.floor(v / 20))];
+const cleanText = t => t.replace(/\s+/g, ' ').trim().slice(0, 300).trim();
+const getAnswer = id => store.get('answers', {})[id]?.answer;
+const setAnswer = (id, value) => { store.set('answers', { ...store.get('answers', {}), [id]: { answer: value, at: new Date().toISOString() } }); showCount(); };
+showCount();
+const skipped = store.get('skipped', {});
+let openId = null;
+CARDS.forEach(d => $('.frame[data-file*="' + d.photo + '"]')?.closest('.photo').classList.add('has-card')); // a longer pinned stretch so the next scene does not slide over the card
+const noScroll = e => { if (!e.target.closest?.('.qcard')) e.preventDefault(); };
+const noKeys = e => { if (' PageDown PageUp ArrowDown ArrowUp Home End'.split(' ').includes(e.key === ' ' ? ' ' : e.key) && !e.target.closest?.('button,input,textarea')) e.preventDefault(); };
+let lockY = 0;
+const hold = () => { if (Math.abs(scrollY - lockY) > 1) scrollTo(0, lockY); }; // catches phone momentum scrolling that started before the card opened
+// shortcut: no overflow:hidden on purpose, it would stop the sticky photo from pinning; upgrade if a browser ignores touchmove blocking
+function lockScroll(on) {
+  lockY = scrollY;
+  const m = on ? 'addEventListener' : 'removeEventListener';
+  ['wheel', 'touchmove'].forEach(ev => window[m](ev, noScroll, { passive: false }));
+  window[m]('keydown', noKeys); window[m]('scroll', hold);
+}
+function closeCard(id, how) {
+  if (openId !== id) return;
+  openId = null; lockScroll(false);
+  if (how === 'skipped') { skipped[id] = 1; store.set('skipped', skipped); }
+  const el = $('.qcard[data-id="' + id + '"]');
+  setTimeout(() => el.classList.remove('show'), how === 'skipped' ? 0 : 2400);
+  setTimeout(() => { el.closest('.pin').classList.remove('carded'); el.remove(); }, how === 'skipped' ? 600 : 3000);
+}
+function openCard(def) {
+  const pin = $('.frame[data-file*="' + def.photo + '"]').closest('.pin');
+  const el = document.createElement('div'); el.className = 'qcard'; el.dataset.id = def.id; el.setAttribute('role', 'group');
+  const q = document.createElement('h3'); q.className = 'qp'; q.textContent = def.prompt;
+  const reply = document.createElement('p'); reply.className = 'reply'; reply.setAttribute('aria-live', 'polite');
+  const skip = document.createElement('button'); skip.className = 'skip'; skip.textContent = 'Skip';
+  skip.addEventListener('click', () => closeCard(def.id, 'skipped'));
+  const send = document.createElement('button'); send.className = 'send'; send.textContent = 'Send';
+  const body = [];
+  if (def.kind === 'choice') {
+    const wrap = document.createElement('div'); wrap.className = 'qopts' + (def.options.length > 2 ? ' two' : '');
+    def.options.forEach(o => {
+      const b = document.createElement('button'); b.className = 'opt'; b.textContent = o.label; b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', () => {
+        if (def.options.some(x => x.correct) && !o.correct) { shake(b); reply.textContent = 'Not quite, have another go.'; return; }
+        $$('.opt', wrap).forEach(x => x.setAttribute('aria-pressed', x === b));
+        reply.textContent = o.reply; setAnswer(def.id, o.value);
+        if (def.done) finish(def.done);
+        closeCard(def.id, 'answered');
+      });
+      wrap.append(b);
+    });
+    body.push(wrap);
+  } else if (def.kind === 'slider') {
+    const wrap = document.createElement('div'); wrap.className = 'qslide';
+    const r = document.createElement('input'); r.type = 'range'; r.min = 0; r.max = 100; r.value = 20; r.setAttribute('aria-label', def.prompt);
+    r.addEventListener('input', () => { reply.textContent = sliderReply(+r.value); });
+    const ends = document.createElement('div'); ends.className = 'ends'; def.ends.forEach(t => { const sp = document.createElement('span'); sp.textContent = t; ends.append(sp); });
+    send.addEventListener('click', () => { setAnswer(def.id, String(r.value)); reply.textContent = sliderReply(+r.value); closeCard(def.id, 'answered'); });
+    wrap.append(r, ends); body.push(wrap, send);
+  } else {
+    const t = document.createElement('textarea'); t.rows = 3; t.maxLength = 300; t.placeholder = 'Type here, or skip'; t.setAttribute('aria-label', def.prompt);
+    send.disabled = true;
+    t.addEventListener('input', () => { send.disabled = !cleanText(t.value); });
+    send.addEventListener('click', () => { const v = cleanText(t.value); if (!v) return; setAnswer(def.id, v); reply.textContent = def.thanks; send.disabled = true; t.disabled = true; closeCard(def.id, 'answered'); });
+    body.push(t, send);
+  }
+  el.append(q, ...body, reply, skip); pin.append(el); pin.classList.add('carded');
+  openId = def.id; lockScroll(true);
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+}
+/* send my answers: the share sheet if the phone has one, else copy to the clipboard */
+function buildSummary() {
+  const all = store.get('answers', {});
+  const lines = CARDS.filter(d => all[d.id]).map(d => {
+    const a = all[d.id].answer;
+    const shown = d.kind === 'choice' ? (d.options.find(o => o.value === a)?.label ?? a) : d.kind === 'slider' ? a + ' out of 100' : a;
+    return d.prompt + ': ' + shown;
+  });
+  return lines.length ? lines.join('\n') + '\n\nSent from our Venice journey' : '';
+}
+async function shareAnswers() {
+  const text = buildSummary();
+  if (!text) return 'empty';
+  try {
+    if (navigator.share) { await navigator.share({ text }); return 'shared'; }
+    await navigator.clipboard.writeText(text); return 'copied';
+  } catch (e) { return e && e.name === 'AbortError' ? 'cancelled' : 'failed'; }
+}
+$('#sendbtn').addEventListener('click', async () => {
+  const btn = $('#sendbtn'), note = $('#sendnote'); note.textContent = '';
+  const r = await shareAnswers();
+  if (r === 'empty') note.textContent = 'Answer a question or two first, then come back.';
+  else if (r === 'copied') { btn.textContent = 'Copied'; note.textContent = 'Paste it into a chat with me.'; }
+  else if (r === 'shared') note.textContent = 'Thank you.';
+  else if (r === 'failed') note.textContent = 'That did not work. You can tell me in person instead.';
+});
+let ticking = false;
+function checkCards() {
+  ticking = false; if (openId) return;
+  const y = scrollY, vh = innerHeight;
+  for (const def of CARDS) {
+    if (getAnswer(def.id) || skipped[def.id]) continue;
+    const pin = $('.frame[data-file*="' + def.photo + '"]')?.closest('.pin'); if (!pin) continue;
+    const t = pin.parentElement.getBoundingClientRect().top + y + vh * .6;
+    if (y >= t && y <= t + vh * .7) { openCard(def); break; }
+  }
+}
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(checkCards); } }, { passive: true });
 
 /* passport stamp */
 const stamp = () => { $('.passport-card').classList.add('stamped'); store.set('stamps', { ...store.get('stamps', {}), venice: true }); };
