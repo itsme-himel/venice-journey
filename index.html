@@ -162,7 +162,7 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </section>
 
   <section class="photo" style="--a:#f2b7b0;--b:#e9c75f">
-    <div class="pin"><div class="frame" data-q="Burano houses"><img alt="Brightly painted houses on Burano" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-q="Burano canal"><img alt="Brightly painted houses on Burano" loading="lazy" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They say fishermen painted their houses bright so they could find home through the fog.</p></div></div>
   </section>
 
@@ -182,7 +182,7 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </section>
 
   <section class="photo" style="--a:#f1e2d0;--b:#c8a58c">
-    <div class="pin"><div class="frame" data-q="Venice laundry"><img alt="Washing hanging between old Venetian houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-q="Burano laundry"><img alt="Washing hanging between old Venetian houses" loading="lazy" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does the laundry look like it belongs in a painting.</p></div></div>
   </section>
 
@@ -214,13 +214,13 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </section>
 
   <section class="photo" style="--a:#f4b98c;--b:#4f6b86">
-    <div class="pin"><div class="frame" data-q="Venice sunset lagoon"><img alt="The Venetian lagoon at sunset" loading="lazy" decoding="async"></div><div class="scrim"></div>
+    <div class="pin"><div class="frame" data-q="Venice sunset gondola"><img alt="The Venetian lagoon at sunset" loading="lazy" decoding="async"></div><div class="scrim"></div>
       <div class="caption"><p class="kicker">Sunset</p><h2>The lagoon</h2><p class="line">Then the light turns gold, and nobody needs to say much.</p></div></div>
   </section>
 
   <section class="photo deep" style="--a:#efe6d8;--b:#7d9aa3">
-    <div class="pin"><div class="frame" style="--focus:50% 64%" data-q="Venice restaurant canal"><img alt="A small café table beside a canal" loading="lazy" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Look closer</p><h2>A table by the water</h2><p class="line">See that little table? Keep going.</p></div>
+    <div class="pin"><div class="frame" style="--focus:50% 64%" data-q="Caffè Florian"><img alt="Café tables at Caffè Florian" loading="lazy" decoding="async"></div><div class="scrim"></div>
+      <div class="caption"><p class="kicker">Since 1720</p><h2>Caffè Florian</h2><p class="line">See that little table? Keep going.</p></div>
       <div class="veil"></div></div>
   </section>
 
@@ -228,7 +228,7 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
     <div class="inner">
       <p class="eyebrow">One day</p>
       <h3>Maybe here.</h3>
-      <p>A cup of tea by the water, a long afternoon, and no rush at all.</p>
+      <p>A cup of tea at a little table, a long afternoon, and no rush at all.</p>
     </div>
   </section>
 
@@ -272,7 +272,7 @@ const API = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&or
   + '&prop=imageinfo&iiprop=url|size|extmetadata&iiextmetadatafilter=Artist|LicenseShortName&iiurlwidth=1800&gsrsearch=';
 const plain = html => new DOMParser().parseFromString(html || '', 'text/html').body.textContent.trim();
 async function candidates(q) {
-  for (const s of [q + ' incategory:Quality_images filetype:bitmap', q + ' filetype:bitmap']) {
+  for (const s of [q + ' incategory:Quality_images filetype:bitmap', q + ' filetype:bitmap -painting -Canaletto -Guardi']) {
     try {
       const r = await (await fetch(API + encodeURIComponent(s))).json();
       const list = Object.values(r.query?.pages || {}).sort((a, b) => a.index - b.index)
@@ -293,7 +293,7 @@ Promise.all(frames.map(f => candidates(f.dataset.q))).then(lists => {
     img.src = ii.thumburl;
     const by = document.createElement('p'); by.className = 'by';
     const a = document.createElement('a'); a.href = ii.descriptionurl; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = ['Photo: ' + (plain(m.Artist?.value) || 'Wikimedia Commons'), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
+    a.textContent = ['Photo: ' + ((plain(m.Artist?.value).split('\n')[0].replace(/^this photo was taken by /i, '').replace(/\.$/, '').slice(0, 48) || 'Wikimedia Commons')), plain(m.LicenseShortName?.value)].filter(Boolean).join(' · ');
     by.append(a); $('.caption', frames[i].closest('.pin')).append(by);
   });
 });
