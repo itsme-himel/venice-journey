@@ -131,6 +131,8 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
 .qcard textarea:focus-visible,.qslide input:focus-visible{outline:2px solid var(--lagoon);outline-offset:2px}
 .send{border:0;border-radius:999px;background:var(--ink);color:var(--paper);padding:.85rem 1.6rem;font-size:1rem;font-weight:500}
 .send:disabled{opacity:.35}
+.whisper{justify-self:start;margin-top:.3rem;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:inherit;border-radius:999px;padding:.55rem 1.1rem;font-size:.9rem}
+.secret{font-style:italic;max-width:30ch;font-size:1.02rem;line-height:1.45}
 .carded .caption{opacity:0!important;visibility:hidden!important}
 @media (max-width:440px){.options{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
@@ -166,11 +168,11 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
 
   <section class="photo" style="--a:#f3c9a8;--b:#7fa7b8">
     <div class="pin"><div class="frame" data-file="File:Canal Grande in the sunrise 20040908.jpg"><img alt="The Grand Canal at sunrise with the Salute church in the distance" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Sunrise</p><h2>Grand Canal</h2><p class="line">Venice wakes up slowly. I think you'd like that about it.</p></div></div>
+      <div class="caption" data-whisper="Fair warning: before 9am I mostly talk to my coffee."><p class="kicker">Sunrise</p><h2>Grand Canal</h2><p class="line">Venice wakes up slowly. I have a feeling you would, too.</p></div></div>
   </section>
   <section class="photo" style="--a:#e8c9a0;--b:#9bb5bd">
     <div class="pin"><div class="frame" data-file="File:Ponte di Rialto Venice 1.jpg"><img alt="The Rialto Bridge at golden hour" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Since 1591</p><h2>Rialto Bridge</h2><p class="line">Over four hundred years old, and still the best spot to watch the boats go by.</p></div></div>
+      <div class="caption" data-whisper="I would hold your bag so you can take the photo. It is called chivalry. Also coat rack."><p class="kicker">Since 1591</p><h2>Rialto Bridge</h2><p class="line">Four hundred years of couples have crossed here. We would be the two arguing about which way the café is.</p></div></div>
   </section>
   <section class="rest" id="act-words"><div class="inner">
       <p class="eyebrow">Little game</p>
@@ -181,19 +183,19 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </div></section>
   <section class="photo" style="--a:#c9d6c8;--b:#6f8f95">
     <div class="pin"><div class="frame" data-file="File:Rio Ca' Michiel (Venice).jpg"><img alt="A narrow quiet canal between old houses" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Off the map</p><h2>A quiet canal</h2><p class="line">The nicest corners of Venice are the ones that aren't on any map.</p></div></div>
+      <div class="caption" data-whisper="I get lost easily. You would have to hold my hand. For safety."><p class="kicker">Off the map</p><h2>A quiet canal</h2><p class="line">No map, no plan. Just us pretending we meant to come this way.</p></div></div>
   </section>
   <section class="photo" style="--a:#d7dfe6;--b:#4d6470">
     <div class="pin"><div class="frame" data-file="File:San Marco Pier 1 (69655534).jpg"><img alt="Gondolas moored near St Mark's" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Waiting by the water</p><h2>Gondolas</h2><p class="line">Every gondola is painted black. It's been the rule for centuries.</p></div></div>
+      <div class="caption" data-whisper="I am told I sing like a kettle. Brace yourself."><p class="kicker">Waiting by the water</p><h2>Gondolas</h2><p class="line">The gondolier might sing. I will not. You are welcome.</p></div></div>
   </section>
   <section class="photo" style="--a:#efe3cf;--b:#b9a58a">
     <div class="pin"><div class="frame" data-file="File:Piazzetta San Marco, Venice, at Dawn - Flickr - blieusong.jpg"><img alt="The Piazzetta San Marco at dawn" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Early morning</p><h2>St Mark's Square</h2><p class="line">Come early, before the crowds. Just the bells, the pigeons and us.</p></div></div>
+      <div class="caption" data-whisper="I would let you win the pigeon staring contest."><p class="kicker">Early morning</p><h2>St Mark's Square</h2><p class="line">Come early, before the crowds. Just the bells, the pigeons and us. Mostly the pigeons.</p></div></div>
   </section>
   <section class="photo" style="--a:#f2b7b0;--b:#e9c75f">
     <div class="pin"><div class="frame" data-file="File:Burano - canal and colourful houses (35262836603).jpg"><img alt="A canal lined with brightly painted houses on Burano" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They say fishermen painted their houses bright so they could find home through the fog.</p></div></div>
+      <div class="caption" data-whisper="My sense of direction is terrible. Your house would need to be bright pink."><p class="kicker">A short boat ride away</p><h2>Burano</h2><p class="line">They painted the houses bright so fishermen could find home in the fog. I like a place with a good sense of direction.</p></div></div>
   </section>
   <section class="rest" id="act-puzzle"><div class="inner">
       <p class="eyebrow">Little puzzle</p>
@@ -205,11 +207,11 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </div></section>
   <section class="photo" style="--a:#f1e2d0;--b:#c8a58c">
     <div class="pin"><div class="frame" data-file="File:Calle dei Olivi, Castello, Laundry Day In Venice (59269042).jpg"><img alt="Washing hanging across a Venetian street" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does the laundry look like it belongs in a painting.</p></div></div>
+      <div class="caption" data-whisper="I fold shirts very well. It is my one hidden talent. Ask me."><p class="kicker">Everyday Venice</p><h2>Washing lines</h2><p class="line">Only in Venice does laundry look like a painting. Mine looks like a crime scene.</p></div></div>
   </section>
   <section class="photo" style="--a:#f6d29a;--b:#8b9fb0">
     <div class="pin"><div class="frame" data-file="File:Basilica Santa Maria della Salute Dorsoduro Venezia.jpg"><img alt="Santa Maria della Salute" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Golden hour</p><h2>Santa Maria della Salute</h2><p class="line">Built to give thanks for the end of a plague, almost four hundred years ago.</p></div></div>
+      <div class="caption" data-whisper="Thank you for talking to me, even when I am too formal."><p class="kicker">Golden hour</p><h2>Santa Maria della Salute</h2><p class="line">Built to say thank you after a hard time. I think about that more than I admit.</p></div></div>
   </section>
   <section class="rest" id="act-riddle"><div class="inner">
       <p class="eyebrow">A small riddle</p>
@@ -225,19 +227,19 @@ button:focus-visible{outline:2px solid var(--lagoon);outline-offset:3px}
   </div></section>
   <section class="photo" style="--a:#e9c8a2;--b:#8a5a44">
     <div class="pin"><div class="frame" data-file="File:Cicchetti Venezia (1).jpg"><img alt="Cicchetti on a bar counter" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Aperitivo time</p><h2>A little bacaro</h2><p class="line">Cicchetti: tiny Venetian snacks, eaten standing at the bar. You pick, I'll pay.</p></div></div>
+      <div class="caption" data-whisper="Sharing food is a serious step. I think I am ready."><p class="kicker">Aperitivo time</p><h2>A little bacaro</h2><p class="line">Cicchetti: tiny snacks, eaten standing at the bar. You pick, I&#39;ll pay. I will also steal one from your plate.</p></div></div>
   </section>
   <section class="photo" style="--a:#e3c7c0;--b:#6b4b5a">
     <div class="pin"><div class="frame" data-file="File:Venetian Carnival Mask - Maschera di Carnevale - Venice Italy - Creative Commons by gnuckx (4816122213).jpg"><img alt="A white Venetian carnival mask" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Carnevale</p><h2>Masks</h2><p class="line">Even behind a mask, I'm fairly sure I'd still recognise you.</p></div></div>
+      <div class="caption" data-whisper="I would be the one without a mask, trying to look relaxed."><p class="kicker">Carnevale</p><h2>Masks</h2><p class="line">Even behind a mask, I&#39;m fairly sure I&#39;d recognise you.</p></div></div>
   </section>
   <section class="photo" style="--a:#f4b98c;--b:#4f6b86">
     <div class="pin"><div class="frame" data-file="File:Gondolieri.jpg"><img alt="A gondola on the lagoon at sunset" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Sunset</p><h2>The lagoon</h2><p class="line">Then the light turns gold, and nobody needs to say much.</p></div></div>
+      <div class="caption" data-whisper="This is where I would say something smooth. Instead: nice sky."><p class="kicker">Sunset</p><h2>The lagoon</h2><p class="line">Then the light turns gold, and nobody needs to say much.</p></div></div>
   </section>
   <section class="photo deep" style="--a:#efe6d8;--b:#7d9aa3">
     <div class="pin"><div class="frame" style="--focus:50% 70%" data-file="File:Caffè Florian (50427073898).jpg"><img alt="Tables and umbrellas outside Caffè Florian" decoding="async"></div><div class="scrim"></div>
-      <div class="caption"><p class="kicker">Since 1720</p><h2>Caffè Florian</h2><p class="line">Pick a little table. We're going closer.</p></div>
+      <div class="caption" data-whisper="Tea or coffee? I already know I would copy your order."><p class="kicker">Since 1720</p><h2>Caffè Florian</h2><p class="line">Pick a little table. We&#39;re going closer.</p></div>
       <div class="veil"></div></div>
   </section>
   <section class="rest note">
@@ -368,7 +370,7 @@ $('#again').addEventListener('click', () => window.scrollTo({ top: firstScene.of
 /* activities: small games between the photos; each one counts toward the passport */
 const done = store.get('done', {});
 const countEl = $('#games');
-const showCount = () => { if (countEl) countEl.textContent = 'Puzzles solved: ' + Object.keys(done).length + ' of 5 \u00b7 Questions answered: ' + Object.keys(store.get('answers', {})).length + ' of ' + CARDS.length; };
+const showCount = () => { if (countEl) countEl.textContent = 'Puzzles solved: ' + Object.keys(done).length + ' of 5 \u00b7 Questions answered: ' + Object.keys(store.get('answers', {})).length + ' of ' + CARDS.length + ' \u00b7 Secrets found: ' + Object.keys(store.get('whispers', {})).length + ' of 12'; };
 const finish = (key, box, msg) => { done[key] = 1; store.set('done', done); showCount(); if (box) { const r = $('.reply', box); r.textContent = msg; r.classList.add('on'); } };
 const shake = el => { el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); };
 
@@ -467,6 +469,7 @@ const CARDS = [
     { label: 'I do', value: 'me', reply: 'Brave. I will pass you the pegs.' },
     { label: 'You do', value: 'you', reply: 'Fair. I will supervise very seriously.' },
     { label: 'We argue about it first', value: 'argue', reply: 'Realistic. I will bring snacks for the argument.' }] },
+  { id: 'lost', photo: 'Rio Ca', kind: 'text', prompt: 'We get lost here on purpose. What do we do?', thanks: 'Honestly, that sounds like a great plan.' },
   { id: 'peace', photo: 'Basilica Santa Maria', kind: 'text', prompt: 'Where do you feel most at peace?', thanks: 'Thank you for telling me. I would like to see that place one day.' },
   { id: 'watching', photo: 'Venetian Carnival Mask', kind: 'text', prompt: 'Who are you when nobody is watching?', thanks: 'I like that you told me.' },
   { id: 'evening', photo: 'Gondolieri', kind: 'text', prompt: 'What does a good evening look like for you?', thanks: 'That sounds lovely. Noted.' },
@@ -541,6 +544,17 @@ function openCard(def) {
   openId = def.id; lockScroll(true);
   requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
 }
+/* secrets: every photo has one tap-to-reveal note */
+const found = store.get('whispers', {});
+$$('.caption[data-whisper]').forEach(c => {
+  const key = $('h2', c).textContent, b = document.createElement('button'); b.className = 'whisper'; b.textContent = 'Tap for a secret';
+  const show = () => { const p = document.createElement('p'); p.className = 'secret'; p.textContent = c.dataset.whisper; b.replaceWith(p); };
+  b.addEventListener('click', () => { show(); found[key] = 1; store.set('whispers', found); showCount(); });
+  c.append(b);
+  if (found[key]) show();
+});
+showCount();
+
 /* send my answers: the share sheet if the phone has one, else copy to the clipboard */
 function buildSummary() {
   const all = store.get('answers', {});
